@@ -6,6 +6,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lucas.course.entities.pk.OrderItemPK;
 
 @Entity
@@ -13,8 +14,9 @@ import com.lucas.course.entities.pk.OrderItemPK;
 public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//classe aux, com id composto, tem que instancia
 	@EmbeddedId
-	private OrderItemPK id;
+	private OrderItemPK id = new OrderItemPK();
 	
 	private Integer quantity;
 	private Double price;
@@ -30,6 +32,8 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 
+	//tava chamando o pedido associdado ao item de pedido, tirar o loop
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
